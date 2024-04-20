@@ -1,0 +1,125 @@
+<div class="row pt-4">
+    <div [className]="formVisible ? 'col-8':'col-12'">
+        <div class="card">
+            <!-- Card Header -->
+            <div class="card-header bg-success">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="text-light ">Cars List</h5>
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class ="btn btn-warning" (click)="formVisible = true">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Card Body -->
+            <div class="card-body">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>SrNo</th>
+                            <th>Customer</th>
+                            <th>Mobile Number</th>
+                            <th>Car Name</th>
+                            <th>Rent Type</th>
+                            <th>Rent Duration</th>
+                            <th>Rent Date</th>
+                            <th>Cars Rented</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of bookings; track item.carId; let sr=$index) {
+                        <tr>
+                            <td>{{sr+1}}</td>
+                            <td>{{item.customerName}}</td>
+                            <td>{{item.mobileNo}}</td>
+                            <td>{{item.carName}}</td>
+                            <td>{{item.rentType}}</td>
+                            <td>{{item.rentDuration}}</td>
+                            <td>{{item.rentDate}}</td>
+                            <td>{{item.noOfCars}}</td>
+                        </tr>
+                    }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    @if (formVisible) {
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <h5 class="text-light ">New Car</h5>
+                        </div>
+                        <div class="col-6 text-end">
+                            <button class ="btn btn-warning" (click)="formVisible = false">Close</button>
+                        </div>
+                    </div>
+                </div>
+    
+                
+                <!--Card Body -->
+                <div class="card-body">
+                    <div class="row pt-3">
+                        <div class="col-6">
+                            <label for="customerName">Customer Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="booking.customerName" id="customerName" placeholder="Customer Name">
+                        </div>
+                        <div class="col-6">
+                            <label for="mobileNo">Mobile Number</label>
+                            <input type="text" class="form-control" [(ngModel)]="booking.mobileNo" id="mobileNo" placeholder="Mobile Number">
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-6">
+                            <label for="car">Cars</label>
+                            <select  class="form-select" [(ngModel)]="booking.carId">
+                                @for (item of carsList; track $index) {
+                                    <option [value]="item.carId">{{item.carName}}</option>
+                                }
+                            </select>
+                        </div>
+                           <div class="col-6">
+                            <label for="bookingDate">Booking Date</label>
+                            <input type="date" class="form-control" [(ngModel)]="booking.rentDate" id="bookingDate" placeholder="Date"> 
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-6">
+                            <label for="rentType">Rent Type</label>
+                            <!-- <input type="number" class="form-control" [(ngModel)]="booking.rentType" id="rentType" placeholder="Rent Type"> -->
+                            <select class="form-select" [(ngModel)]="booking.rentType">
+                                <!-- <option value=" " selected>select rent type</option> -->
+                                <option value="Per Hour" selected>By Hour</option>
+                                <option value="Per Day">By Day</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="rentDuration">Rent Duration</label>
+                            <input type="number" class="form-control" [(ngModel)]="booking.rentDuration" id="rentDuration" placeholder="Rent Duration">
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-6">
+                            <label for="noOfCars">Cars Quantity</label>
+                            <input type="number" class="form-control" [(ngModel)]="booking.noOfCars" id="cars" placeholder="Number of Cars">
+                        </div>
+                    </div>
+                    <div class="row text-center pt-3" >
+                        <div class="col-6">
+                            <button class ="btn btn-warning" (click)="onReset()">Reset</button>
+                        </div>
+                        <div class="col-6">
+                            <button class ="btn btn-success" (click)="onSubmitBooking()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+ 
+</div>
